@@ -198,8 +198,6 @@ export class WAConnection extends Base {
 
         const qrLoop = ttl => {
             const qr = [ref, publicKey, this.authInfo.clientID].join(',')
-            this.emit ('qr', qr)
-
             this.initTimeout = setTimeout (async () => {
                 if (this.state === 'open') return
 
@@ -218,6 +216,7 @@ export class WAConnection extends Base {
                 }
                 qrLoop (ttl)
             }, ttl || 20_000) // default is 20s, on the off-chance ttl is not present
+            this.emit ('qr', qr)
         }
         qrLoop (ttl)
     }
